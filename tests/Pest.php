@@ -6,7 +6,7 @@ use Spatie\Comments\Tests\Support\Models\User;
 use Spatie\Comments\Tests\Support\TestCase;
 
 uses(TestCase::class)
-    ->beforeEach(function() {
+    ->beforeEach(function () {
         config()->set('comments.models.user', User::class);
     })
     ->in(__DIR__);
@@ -21,6 +21,6 @@ function logout(): void
     Auth::logout();
 }
 
-expect()->extend('isModel', function(Model $model) {
+expect()->extend('isModel', function (Model $model) {
     expect($this->value)->is($model)->toBeTrue();
 });

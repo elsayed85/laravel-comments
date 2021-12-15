@@ -2,13 +2,13 @@
 
 namespace Spatie\Comments\Tests\Support;
 
+use function class_basename;
+use function config;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\Comments\CommentsServiceProvider;
-use function class_basename;
-use function config;
 
 class TestCase extends Orchestra
 {
@@ -44,7 +44,7 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
 
-        Schema::create('posts', function(Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->timestamps();

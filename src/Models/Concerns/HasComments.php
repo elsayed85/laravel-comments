@@ -18,7 +18,7 @@ trait HasComments
     {
         $user ??= auth()->user();
 
-        if (!$user) {
+        if (! $user) {
             throw CannotCreateComment::userIsRequired();
         }
 
