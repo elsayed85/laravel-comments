@@ -51,7 +51,7 @@ return [
 ## Usage
 
 ```php
-$laravel-comments = new Spatie\LaravelComments();
+$laravel-comments = new Spatie\Comments();
 echo $laravel-comments->echoPhrase('Hello, Spatie!');
 ```
 

@@ -34,13 +34,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\LaravelComments\\": "src",
-            "Spatie\\LaravelComments\\Database\\Factories\\": "database/factories"
+            "Spatie\\Comments\\": "src",
+            "Spatie\\Comments\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\LaravelComments\\Tests\\": "tests"
+            "Spatie\\Comments\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -54,10 +54,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\LaravelComments\\LaravelCommentsServiceProvider"
+                "Spatie\\Comments\\CommentsServiceProvider"
             ],
             "aliases": {
-                "LaravelComments": "Spatie\\LaravelComments\\Facades\\LaravelComments"
+                "Comments": "Spatie\\Comments\\Facades\\Comments"
             }
         }
     },
