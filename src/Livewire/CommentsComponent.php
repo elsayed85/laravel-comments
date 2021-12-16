@@ -12,7 +12,7 @@ class CommentsComponent extends Component
     public $model;
 
     protected $listeners = [
-        'refresh' => '$refresh'
+        'refresh' => '$refresh',
     ];
 
     public $newCommentText = '';
@@ -40,7 +40,7 @@ class CommentsComponent extends Component
             ->paginate(10);
 
         return view('comments::comments', [
-            'comments' => $comments
+            'comments' => $comments,
         ]);
     }
 }

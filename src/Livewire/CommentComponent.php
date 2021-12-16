@@ -2,8 +2,8 @@
 
 namespace Spatie\Comments\Livewire;
 
-use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class CommentComponent extends Component
 {
@@ -13,7 +13,7 @@ class CommentComponent extends Component
     public $comment;
 
     protected $listeners = [
-        'refresh' => '$refresh'
+        'refresh' => '$refresh',
     ];
 
     public $replyCommentText = '';
@@ -26,7 +26,7 @@ class CommentComponent extends Component
 
     public function updatedIsEditing($isEditing)
     {
-        if (!$isEditing) {
+        if (! $isEditing) {
             return;
         }
 
@@ -38,7 +38,7 @@ class CommentComponent extends Component
         //$this->authorize('update', $this->comment);
 
         $this->comment->update([
-            'text' => $this->editCommentText
+            'text' => $this->editCommentText,
         ]);
 
         $this->isEditing = false;
@@ -55,12 +55,12 @@ class CommentComponent extends Component
 
     public function postReply()
     {
-        if (!$this->comment->isTopLevel()) {
+        if (! $this->comment->isTopLevel()) {
             return;
         }
 
         $this->validate([
-            'replyCommentText' => 'required'
+            'replyCommentText' => 'required',
         ]);
 
         $this->comment->comment($this->replyCommentText);
