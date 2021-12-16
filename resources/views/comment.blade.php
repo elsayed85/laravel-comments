@@ -1,7 +1,7 @@
 <div>
     <div class="flex">
         <div class="flex-shrink-0 mr-4">
-            <img class="h-10 w-10 rounded-full" src="{{ $comment->user->avatar() }}" alt="{{ $comment->user->name }}">
+            <img class="h-10 w-10 rounded-full" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="{{ $comment->user->name }}">
         </div>
         <div class="flex-grow">
             <div>
@@ -12,9 +12,9 @@
                     <form wire:submit.prevent="editComment">
                         <div>
                             <label for="comment" class="sr-only">Comment body</label>
-                            <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md @error('editState.body') border-red-500 @enderror" placeholder="Write something" wire:model.defer="editState.body"></textarea>
+                            <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md @error('editCommentText') border-red-500 @enderror" placeholder="Write something" wire:model.defer="editCommentText"></textarea>
 
-                            @error('editState.body')
+                            @error('editCommentText')
                             <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
@@ -25,15 +25,16 @@
                         </div>
                     </form>
                 @else
-                    <p class="text-gray-700">{{ $comment->presenter()->markdownBody() }}</p>
+                    <!-- render markdown here -->
+                    <p class="text-gray-700">{{ $comment->text }}</p>
                 @endif
             </div>
             <div class="mt-2 space-x-2">
         <span class="text-gray-500 font-medium">
-          {{ $comment->presenter()->relativeCreatedAt() }}
+          {{ $comment->created_at }}
         </span>
                 @auth
-                    @if ($comment->isParent())
+                    @if ($comment->isTopLevel())
                         <button wire:click="$toggle('isReplying')" type="button" class="text-gray-900 font-medium">
                             Reply
                         </button>
@@ -45,22 +46,15 @@
                         </button>
                     @endcan
 
-                    @can('destroy', $comment)
+                    {{-- @can('destroy', $comment)  --}}
                         <button
                             type="button"
                             class="text-gray-900 font-medium"
-                            x-on:click="confirmCommentDeletion"
-                            x-data="{
-                confirmCommentDeletion () {
-                  if (window.confirm('You sure?')) {
-                    @this.call('deleteComment')
-                  }
-                }
-              }"
+                            wire:click="deleteComment"
                         >
                             Delete
                         </button>
-                    @endcan
+                    {{-- @endcan --}}
                 @endauth
             </div>
         </div>
@@ -71,9 +65,9 @@
             <form wire:submit.prevent="postReply" class="my-4">
                 <div>
                     <label for="comment" class="sr-only">Reply body</label>
-                    <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md @error('replyState.body') border-red-500 @enderror" placeholder="Write something" wire:model.defer="replyState.body"></textarea>
+                    <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md @error('replyCommentText') border-red-500 @enderror" placeholder="Write something" wire:model.defer="replyCommentText"></textarea>
 
-                    @error('replyState.body')
+                    @error('replyCommentText')
                     <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
                     @enderror
                 </div>
@@ -85,8 +79,8 @@
             </form>
         @endif
 
-        @foreach ($comment->children as $child)
-            <livewire:comment :comment="$child" :key="$child->id" />
+        @foreach ($comment->nestedComments as $comment)
+            <livewire:comment :comment="$comment" :key="$comment->id" />
         @endforeach
     </div>
 </div>

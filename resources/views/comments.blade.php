@@ -22,15 +22,15 @@
             @auth
                 <div class="flex">
                     <div class="flex-shrink-0 mr-4">
-                        <img class="h-10 w-10 rounded-full" src="{{ auth()->user()->avatar() }}" alt="{{ auth()->user()->name }}">
+                        <img class="h-10 w-10 rounded-full" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="{{ auth()->user()->name }}">
                     </div>
                     <div class="min-w-0 flex-1">
-                        <form wire:submit.prevent="postComment">
+                        <form wire:submit.prevent="createComment">
                             <div>
                                 <label for="comment" class="sr-only">Comment body</label>
-                                <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md @error('newCommentState.body') border-red-500 @enderror" placeholder="Write something" wire:model.defer="newCommentState.body"></textarea>
+                                <textarea id="comment" name="comment" rows="3" class="shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md @error('newCommentText') border-red-500 @enderror" placeholder="Write something" wire:model.defer="newCommentText"></textarea>
 
-                                @error('newCommentState.body')
+                                @error('newCommentText')
                                 <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>

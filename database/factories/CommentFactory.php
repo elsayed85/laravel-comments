@@ -18,7 +18,7 @@ class CommentFactory extends Factory
             'user_id' => User::factory(),
             'commentable_id' => Post::factory(),
             'commentable_type' => Post::class,
-            'comment' => 'comment text',
+            'text' => 'comment text',
         ];
     }
 }

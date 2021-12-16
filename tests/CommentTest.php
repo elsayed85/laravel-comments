@@ -18,7 +18,7 @@ it('can add comments', function () {
 
     expect($this->post->comments->first())
         ->user->toBeInstanceOf(User::class)
-        ->comment->toBe('my comment');
+        ->text->toBe('my comment');
 });
 
 it('can add multiple comments', function () {

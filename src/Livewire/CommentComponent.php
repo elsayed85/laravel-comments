@@ -7,29 +7,22 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CommentComponent extends Component
 {
-    use AuthorizesRequests;
+    //use AuthorizesRequests;
 
+    /** @var \Spatie\Comments\Models\Comment */
     public $comment;
 
     protected $listeners = [
         'refresh' => '$refresh'
     ];
 
-    protected $validationAttributes = [
-        'replyState.body' => 'reply'
-    ];
+    public $replyCommentText = '';
 
     public $isReplying = false;
 
-    public $replyState = [
-        'body' => ''
-    ];
-
     public $isEditing = false;
 
-    public $editState = [
-        'body' => ''
-    ];
+    public $editCommentText = '';
 
     public function updatedIsEditing($isEditing)
     {
@@ -37,23 +30,23 @@ class CommentComponent extends Component
             return;
         }
 
-        $this->editState = [
-            'body' => $this->comment->body
-        ];
+        $this->editCommentText = $this->comment->text;
     }
 
     public function editComment()
     {
-        $this->authorize('update', $this->comment);
+        //$this->authorize('update', $this->comment);
 
-        $this->comment->update($this->editState);
+        $this->comment->update([
+            'text' => $this->editCommentText
+        ]);
 
         $this->isEditing = false;
     }
 
     public function deleteComment()
     {
-        $this->authorize('destroy', $this->comment);
+        //$this->authorize('destroy', $this->comment);
 
         $this->comment->delete();
 
@@ -62,23 +55,17 @@ class CommentComponent extends Component
 
     public function postReply()
     {
-        if (!$this->comment->isParent()) {
+        if (!$this->comment->isTopLevel()) {
             return;
         }
 
         $this->validate([
-            'replyState.body' => 'required'
+            'replyCommentText' => 'required'
         ]);
 
-        $reply = $this->comment->children()->make($this->replyState);
-        $reply->user()->associate(auth()->user());
-        $reply->commentable()->associate($this->comment->commentable);
+        $this->comment->comment($this->replyCommentText);
 
-        $reply->save();
-
-        $this->replyState = [
-            'body' => ''
-        ];
+        $this->replyCommentText = '';
 
         $this->isReplying = false;
 
@@ -87,6 +74,6 @@ class CommentComponent extends Component
 
     public function render()
     {
-        return view('comment::comment');
+        return view('comments::comment');
     }
 }

@@ -14,7 +14,7 @@ trait HasComments
         return $this->morphMany(Config::getCommentModelName(), 'commentable');
     }
 
-    public function comment(string $comment, Model $user = null): self
+    public function comment(string $text, Model $user = null): self
     {
         $user ??= auth()->user();
 
@@ -28,7 +28,7 @@ trait HasComments
 
         $this->comments()->create([
             'user_id' => $user->getKey(),
-            'comment' => $comment,
+            'text' => $text,
             'parent_id' => $parentId,
         ]);
 

@@ -15,28 +15,19 @@ class CommentsComponent extends Component
         'refresh' => '$refresh'
     ];
 
-    public $newCommentState = [
-        'body' => ''
+    public $newCommentText = '';
+
+    protected $rules = [
+        'newCommentText' => 'required',
     ];
 
-    protected $validationAttributes = [
-        'newCommentState.body' => 'comment'
-    ];
-
-    public function postComment()
+    public function createComment()
     {
-        $this->validate([
-            'newCommentState.body' => 'required'
-        ]);
-
-        $comment = $this->model->comments()->make($this->newCommentState);
-        $comment->user()->associate(auth()->user());
+        $comment = $this->model->comment($this->newCommentText);
 
         $comment->save();
 
-        $this->newCommentState = [
-            'body' => ''
-        ];
+        $this->newCommentText = '';
 
         $this->goToPage(1);
     }
@@ -45,10 +36,8 @@ class CommentsComponent extends Component
     {
         $comments = $this->model
             ->comments()
-            ->with('user', 'children.user', 'children.children')
-            ->parent()
-            ->latest()
-            ->paginate(3);
+            ->with('user', 'nestedComments.user')
+            ->paginate(10);
 
         return view('comments::comments', [
             'comments' => $comments
