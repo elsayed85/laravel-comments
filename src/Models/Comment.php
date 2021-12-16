@@ -7,11 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Foundation\Auth\User;
-use PhpParser\Node\Expr\AssignOp\Mod;
 use Spatie\Comments\Models\Concerns\HasComments;
 use Spatie\Comments\Support\Config;
-
 
 class Comment extends Model
 {
