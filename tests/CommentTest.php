@@ -44,7 +44,7 @@ it('can create a comment for a specific user', function () {
     expect($this->post->comments->first()->user)->isModel($anotherUser);
 });
 
-it('can create a nested comment', function() {
+it('can create a nested comment', function () {
     $this->post->comment('top level comment');
     /** @var Comment $topLevelComment */
     $topLevelComment = Comment::first();
@@ -56,7 +56,7 @@ it('can create a nested comment', function() {
     expect($nestedComment->isTopLevel())->toBeFalse();
 });
 
-it('has a relation to get nested comments', function() {
+it('has a relation to get nested comments', function () {
     $this->post->comment('top level comment');
     /** @var Comment $topLevelComment */
     $topLevelComment = Comment::first();
@@ -68,4 +68,3 @@ it('has a relation to get nested comments', function() {
     expect($topLevelComment->nestedComments->first())->isModel($nestedComment);
     expect($nestedComment->nestedComments)->toHaveCount(0);
 });
-

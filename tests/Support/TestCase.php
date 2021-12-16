@@ -2,12 +2,12 @@
 
 namespace Spatie\Comments\Tests\Support;
 
-use Livewire\LivewireServiceProvider;
 use function class_basename;
 use function config;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\Comments\CommentsServiceProvider;
 
