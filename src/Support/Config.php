@@ -17,4 +17,9 @@ class Config
     {
         return config('comments.models.comment');
     }
+
+    public static function getReactionModelName(): string
+    {
+        return config('comments.models.reaction');
+    }
 }

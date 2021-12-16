@@ -16,5 +16,14 @@ return new class extends Migration
             $table->json('extra')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('reactions', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreignId('comment_id')->references('comments')->cascadeOnDelete();
+            $table->string('reaction');
+            $table->timestamps();
+
+        });
     }
 };

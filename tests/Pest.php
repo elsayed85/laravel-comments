@@ -11,9 +11,13 @@ uses(TestCase::class)
     })
     ->in(__DIR__);
 
-function login(User $user = null): void
+function login(User $user = null): User
 {
-    Auth::login($user ?? User::factory()->create());
+    $currentUser = $user ?? User::factory()->create();
+
+    Auth::login($currentUser);
+
+    return $currentUser;
 }
 
 function logout(): void
@@ -24,3 +28,7 @@ function logout(): void
 expect()->extend('isModel', function (Model $model) {
     expect($this->value)->is($model)->toBeTrue();
 });
+
+function expectNoExceptionsThrown() {
+    expect(true)->toBeTrue();
+}
