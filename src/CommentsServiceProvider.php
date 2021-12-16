@@ -12,7 +12,6 @@ class CommentsServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-comments')
             ->hasConfigFile()
-            ->hasViews()
             ->hasMigration('create_comments_table');
     }
 }
