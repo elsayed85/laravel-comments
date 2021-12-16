@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Comments\Support\Config;
 
-/**
- * @property int $user_id
- */
 class Reaction extends Model
 {
     public $guarded = [];
