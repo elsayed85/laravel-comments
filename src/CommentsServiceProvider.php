@@ -23,6 +23,5 @@ class CommentsServiceProvider extends PackageServiceProvider
     {
         Livewire::component('comments', CommentsComponent::class);
         Livewire::component('comment', CommentComponent::class);
-
     }
 }

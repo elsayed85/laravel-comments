@@ -2,8 +2,8 @@
 
 namespace Spatie\Comments\Livewire;
 
-use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
 
 class CommentComponent extends Component
 {
@@ -12,33 +12,33 @@ class CommentComponent extends Component
     public $comment;
 
     protected $listeners = [
-        'refresh' => '$refresh'
+        'refresh' => '$refresh',
     ];
 
     protected $validationAttributes = [
-        'replyState.body' => 'reply'
+        'replyState.body' => 'reply',
     ];
 
     public $isReplying = false;
 
     public $replyState = [
-        'body' => ''
+        'body' => '',
     ];
 
     public $isEditing = false;
 
     public $editState = [
-        'body' => ''
+        'body' => '',
     ];
 
     public function updatedIsEditing($isEditing)
     {
-        if (!$isEditing) {
+        if (! $isEditing) {
             return;
         }
 
         $this->editState = [
-            'body' => $this->comment->body
+            'body' => $this->comment->body,
         ];
     }
 
@@ -62,12 +62,12 @@ class CommentComponent extends Component
 
     public function postReply()
     {
-        if (!$this->comment->isParent()) {
+        if (! $this->comment->isParent()) {
             return;
         }
 
         $this->validate([
-            'replyState.body' => 'required'
+            'replyState.body' => 'required',
         ]);
 
         $reply = $this->comment->children()->make($this->replyState);
@@ -77,7 +77,7 @@ class CommentComponent extends Component
         $reply->save();
 
         $this->replyState = [
-            'body' => ''
+            'body' => '',
         ];
 
         $this->isReplying = false;

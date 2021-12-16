@@ -12,21 +12,21 @@ class CommentsComponent extends Component
     public $model;
 
     protected $listeners = [
-        'refresh' => '$refresh'
+        'refresh' => '$refresh',
     ];
 
     public $newCommentState = [
-        'body' => ''
+        'body' => '',
     ];
 
     protected $validationAttributes = [
-        'newCommentState.body' => 'comment'
+        'newCommentState.body' => 'comment',
     ];
 
     public function postComment()
     {
         $this->validate([
-            'newCommentState.body' => 'required'
+            'newCommentState.body' => 'required',
         ]);
 
         $comment = $this->model->comments()->make($this->newCommentState);
@@ -35,7 +35,7 @@ class CommentsComponent extends Component
         $comment->save();
 
         $this->newCommentState = [
-            'body' => ''
+            'body' => '',
         ];
 
         $this->goToPage(1);
@@ -51,7 +51,7 @@ class CommentsComponent extends Component
             ->paginate(3);
 
         return view('comments::comments', [
-            'comments' => $comments
+            'comments' => $comments,
         ]);
     }
 }
