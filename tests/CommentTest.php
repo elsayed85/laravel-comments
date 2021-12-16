@@ -1,6 +1,7 @@
 <?php
 
 use Spatie\Comments\Exceptions\CannotCreateComment;
+use Spatie\Comments\Models\Comment;
 use Spatie\Comments\Tests\Support\Models\Post;
 use Spatie\Comments\Tests\Support\Models\User;
 
@@ -42,3 +43,29 @@ it('can create a comment for a specific user', function () {
 
     expect($this->post->comments->first()->user)->isModel($anotherUser);
 });
+
+it('can create a nested comment', function() {
+    $this->post->comment('top level comment');
+    /** @var Comment $topLevelComment */
+    $topLevelComment = Comment::first();
+
+    $topLevelComment->comment('nested comment');
+    $nestedComment = Comment::find(2);
+
+    expect($topLevelComment->isTopLevel())->toBeTrue();
+    expect($nestedComment->isTopLevel())->toBeFalse();
+});
+
+it('has a relation to get nested comments', function() {
+    $this->post->comment('top level comment');
+    /** @var Comment $topLevelComment */
+    $topLevelComment = Comment::first();
+
+    $topLevelComment->comment('nested comment');
+    $nestedComment = Comment::find(2);
+
+    expect($topLevelComment->nestedComments)->toHaveCount(1);
+    expect($topLevelComment->nestedComments->first())->isModel($nestedComment);
+    expect($nestedComment->nestedComments)->toHaveCount(0);
+});
+

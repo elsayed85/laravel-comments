@@ -2,6 +2,7 @@
 
 namespace Spatie\Comments\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +32,21 @@ class Comment extends Model
         return $this->belongsTo(Config::getUserModelName(), 'user_id');
     }
 
+    public function nestedComments(): HasMany
+    {
+        return $this->hasMany(Config::getCommentModelName(), 'parent_id');
+    }
+
+    public function isTopLevel(): bool
+    {
+        return is_null($this->parent_id);
+    }
+
+    public function scopeTopLevel(Builder $builder): void
+    {
+        $builder->whereNull('parent_id');
+    }
+
     public function reactions(): HasMany
     {
         return $this->hasMany(Config::getReactionModelName());
@@ -44,7 +60,6 @@ class Comment extends Model
             'user_id' => $user->getKey(),
             'reaction' => $reaction,
         ]);
-
 
         return $this;
     }

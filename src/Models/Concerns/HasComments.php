@@ -22,16 +22,15 @@ trait HasComments
             throw CannotCreateComment::userIsRequired();
         }
 
-        $commentClass = Config::getCommentModelName();
+        $parentId = ($this::class === Config::getCommentModelName())
+            ? $this->id
+            : null;
 
-        $comment = new $commentClass([
+        $this->comments()->create([
             'user_id' => $user->getKey(),
-            'commentable_id' => $this->getKey(),
-            'commentable_type' => $this::class,
             'comment' => $comment,
+            'parent_id' => $parentId,
         ]);
-
-        $this->comments()->save($comment);
 
         return $this;
     }

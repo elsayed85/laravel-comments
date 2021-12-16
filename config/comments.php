@@ -22,7 +22,5 @@ return [
          *  When this is set to null, we'll use the default user model.
          */
         'user' => null,
-    ]
-
-
+    ],
 ];

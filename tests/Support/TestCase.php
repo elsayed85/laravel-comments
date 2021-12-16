@@ -2,6 +2,7 @@
 
 namespace Spatie\Comments\Tests\Support;
 
+use Livewire\LivewireServiceProvider;
 use function class_basename;
 use function config;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,6 +26,7 @@ class TestCase extends Orchestra
     {
         return [
             CommentsServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 
