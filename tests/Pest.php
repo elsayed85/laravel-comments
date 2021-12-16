@@ -29,6 +29,7 @@ expect()->extend('isModel', function (Model $model) {
     expect($this->value)->is($model)->toBeTrue();
 });
 
-function expectNoExceptionsThrown() {
+function expectNoExceptionsThrown()
+{
     expect(true)->toBeTrue();
 }

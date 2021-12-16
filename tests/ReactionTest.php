@@ -3,13 +3,13 @@
 use Spatie\Comments\Models\Comment;
 use Spatie\Comments\Tests\Support\Models\User;
 
-beforeEach(function() {
-   $this->currentUser = login();
+beforeEach(function () {
+    $this->currentUser = login();
 
     $this->comment = Comment::factory()->create();
 });
 
-it('can add a reaction to a comment', function() {
+it('can add a reaction to a comment', function () {
     $this->comment->react('👍');
 
     expect($this->comment->reactions)->toHaveCount(1);
@@ -19,7 +19,7 @@ it('can add a reaction to a comment', function() {
         ->reaction->toBe('👍');
 });
 
-it('will make sure reactions are unique for a user', function() {
+it('will make sure reactions are unique for a user', function () {
     $this->comment->react('👍');
     $this->comment->react('👍');
 
@@ -34,20 +34,20 @@ it('will make sure reactions are unique for a user', function() {
     expect($this->comment->fresh()->reactions)->toHaveCount(3);
 });
 
-it('can remove a reaction', function() {
+it('can remove a reaction', function () {
     $this->comment->react('👍');
 
     $this->comment->removeReaction('👍');
     expect($this->comment->fresh()->reactions)->toHaveCount(0);
 });
 
-it('will not complain when trying to remove a non-existing reaction', function() {
+it('will not complain when trying to remove a non-existing reaction', function () {
     $this->comment->removeReaction('👍');
 
     expectNoExceptionsThrown();
 });
 
-it('will remove the reaction of a specific user', function() {
+it('will remove the reaction of a specific user', function () {
     $anotherUser = User::factory()->create();
     $this->comment->react('👍');
     $this->comment->react('👍', $anotherUser);
